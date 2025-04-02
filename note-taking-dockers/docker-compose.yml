@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  mysql:
+    build: mysql
+    container_name: local-mysql
+    network_mode: host
+    environment:
+      - MYSQL_DATABASE=keycloak_db
+      - MYSQL_ROOT_PASSWORD=12345678
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --character-set-filesystem=utf8 --lower_case_table_names=1
+    volumes:
+      - volume-mysql:/var/lib/mysql
+
+  keycloak:
+    build: keycloak
+    container_name: local-keycloak
+    network_mode: host
+    environment:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8080
+      KC_HTTP_RELATIVE_PATH: /auth
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://localhost:3306/keycloak_db?characterEncoding=UTF-8
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: 12345678
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: password
+    command: start-dev
+    depends_on:
+      - mysql
+    volumes:
+      - volume-keycloak:/var/lib/local-keycloak
+volumes:
+  volume-mysql:
+  volume-keycloak:
