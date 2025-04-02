@@ -1,0 +1,296 @@
+.container {
+  position: relative;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #1a73e8;
+}
+
+.main-content {
+  margin-top: 60px;
+  padding: 0;
+  width: 100%;
+}
+
+.add-note-button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+.notes-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(90vh - 60px);
+  width: 100%;
+}
+
+.search-container {
+  padding: 16px;
+  background-color: #fff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.notes-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  background-color: #fff;
+  height: calc(100% - 60px);
+}
+
+.notes-titles {
+  width: 30%;
+  overflow-y: auto;
+  border-right: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  height: 100%;
+}
+
+.note-title {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 0.2s;
+}
+
+.note-title:hover {
+  background-color: #e9ecef;
+}
+
+.note-title.selected {
+  background-color: #e3f2fd;
+  color: #1a73e8;
+}
+
+.note-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+
+.note-content-header {
+  padding: 16px;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #fff;
+}
+
+.title-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.title-input:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.content-textarea {
+  width: 100%;
+  flex: 1;
+  padding: 16px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  resize: none;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #fff;
+}
+
+.no-note-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.form-input:first-of-type {
+  margin-bottom: 10px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-button {
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.notes-list {
+  margin-top: 20px;
+}
+
+.note-item {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.update-button-container {
+  position: absolute;
+  bottom: 0px;
+  right: 16px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.update-button,
+.delete-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.update-button {
+  background-color: #4CAF50;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.update-button:hover,
+.delete-button:hover {
+  opacity: 0.9;
+}
+
+.update-button:disabled,
+.delete-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.markdown-editor {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+.markdown-editor .w-md-editor {
+  height: 100% !important;
+} 

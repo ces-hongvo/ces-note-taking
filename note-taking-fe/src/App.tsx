@@ -20,7 +20,6 @@ const SecuredContent = () => {
   if (!isLoggedIn) return <div>Not logged in</div>;
   return (
     <div>
-      <h2>Springboot app using Keycloak authentication provider</h2>
       <Notes />
     </div>
   );

@@ -1,0 +1,89 @@
+.markdown-editor {
+  height: 100%;
+  overflow: auto;
+  background-color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.markdown-editor .w-md-editor {
+  height: 100% !important;
+}
+
+.markdown-editor .w-md-editor-toolbar {
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+.markdown-editor .w-md-editor-input {
+  background-color: #fff;
+}
+
+.markdown-editor .w-md-editor-preview {
+  background-color: #f8f9fa;
+  border-left: 1px solid #dee2e6;
+}
+
+.markdown-editor .w-md-editor-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.markdown-editor .w-md-editor-preview {
+  padding: 16px;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var h1,
+.markdown-editor .w-md-editor-preview .wmde-markdown-var h2,
+.markdown-editor .w-md-editor-preview .wmde-markdown-var h3,
+.markdown-editor .w-md-editor-preview .wmde-markdown-var h4,
+.markdown-editor .w-md-editor-preview .wmde-markdown-var h5,
+.markdown-editor .w-md-editor-preview .wmde-markdown-var h6 {
+  margin: 1em 0 0.5em 0;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var p {
+  margin: 0 0 1em 0;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var ul,
+.markdown-editor .w-md-editor-preview .wmde-markdown-var ol {
+  padding-left: 2em;
+  margin: 1em 0;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var blockquote {
+  border-left: 4px solid #dee2e6;
+  margin: 1em 0;
+  padding-left: 1em;
+  color: #666;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var pre {
+  background-color: #f8f9fa;
+  padding: 1em;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var code {
+  background-color: #f8f9fa;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.markdown-editor .w-md-editor-preview .wmde-markdown-var a:hover {
+  text-decoration: underline;
+} 

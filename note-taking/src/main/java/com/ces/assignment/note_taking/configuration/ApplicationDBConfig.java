@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories("com.ces.assignment.note_taking.repository")
 @EnableTransactionManagement
 public class ApplicationDBConfig {
 
