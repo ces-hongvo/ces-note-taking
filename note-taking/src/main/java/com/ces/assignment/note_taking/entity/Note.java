@@ -2,9 +2,12 @@ package com.ces.assignment.note_taking.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -33,4 +36,12 @@ public class Note implements Serializable {
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = true, updatable = true)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

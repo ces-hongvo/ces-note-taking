@@ -2,6 +2,8 @@ package com.ces.assignment.note_taking.service.impl;
 
 import com.ces.assignment.note_taking.entity.Note;
 import com.ces.assignment.note_taking.entity.User;
+import com.ces.assignment.note_taking.exception.NoteNotFoundException;
+import com.ces.assignment.note_taking.exception.UnauthorizedAccessException;
 import com.ces.assignment.note_taking.repository.NoteRepository;
 import com.ces.assignment.note_taking.service.api.CommandNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +30,12 @@ public class CommandNoteServiceImpl implements CommandNoteService {
     }
 
     @Override
-    public Note updateNote(User user, long noteId, String title, String content) throws RuntimeException{
-        Note note = noteRepository.findById(noteId).orElse(null);
-        if (note == null) {
-            return note;
-        }
+    public Note updateNote(User user, long noteId, String title, String content) {
+        Note note = noteRepository.findById(noteId)
+            .orElseThrow(() -> new NoteNotFoundException(noteId));
+
         if (!Objects.equals(note.getUser().getUserId(), user.getUserId())) {
-            throw new RuntimeException("Forbidden Action");
+            throw new UnauthorizedAccessException(noteId);
         }
 
         note.setTitle(title);
@@ -44,13 +45,12 @@ public class CommandNoteServiceImpl implements CommandNoteService {
     }
 
     @Override
-    public Note deleteNote(User user, long noteId) throws RuntimeException {
-        Note note = noteRepository.findById(noteId).orElse(null);
-        if (note == null) {
-            return note;
-        }
+    public Note deleteNote(User user, long noteId) {
+        Note note = noteRepository.findById(noteId)
+            .orElseThrow(() -> new NoteNotFoundException(noteId));
+
         if (!Objects.equals(note.getUser().getUserId(), user.getUserId())) {
-            throw new RuntimeException("Forbidden Action");
+            throw new UnauthorizedAccessException(noteId);
         }
 
         noteRepository.delete(note);

@@ -2,6 +2,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 import "./notes.css";
 import NotesContainer from "./NotesContainer";
+import { API_BASE_URL } from "./constants";
 
 type Note = {
   noteId: string;
@@ -20,12 +21,13 @@ const Notes = () => {
       try {
         if (keycloak && keycloak.authenticated) {
           await keycloak?.updateToken(1);
-          const req = await fetch("http://localhost:8081/note", {
+          const req = await fetch(`${API_BASE_URL}/note`, {
             headers: {
               ["Authorization"]: `Bearer ${keycloak.token}`,
             },
           });
-          setNotes(await req.json());
+          const response = await req.json();
+          setNotes(response.notes || []);
         }
       } catch (e) {
         console.log("ERROR", e);
@@ -39,7 +41,7 @@ const Notes = () => {
     try {
       if (keycloak && keycloak.authenticated) {
         await keycloak?.updateToken(1);
-        const response = await fetch("http://localhost:8081/note", {
+        const response = await fetch(`${API_BASE_URL}/note`, {
           method: "POST",
           headers: {
             ["Authorization"]: `Bearer ${keycloak.token}`,

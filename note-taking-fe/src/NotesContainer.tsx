@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useKeycloak } from "@react-keycloak/web";
 import MarkdownEditor from './MarkdownEditor';
 import './notes.css';
+import { API_BASE_URL } from './constants';
 
 type Note = {
   noteId: string;
@@ -28,7 +29,7 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
     try {
       if (keycloak && keycloak.authenticated) {
         await keycloak?.updateToken(1);
-        const response = await fetch(`http://localhost:8081/note/${selectedNote.noteId}`, {
+        const response = await fetch(`${API_BASE_URL}/note/${selectedNote.noteId}`, {
           method: "PUT",
           headers: {
             ["Authorization"]: `Bearer ${keycloak.token}`,
@@ -55,7 +56,7 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
     try {
       if (keycloak && keycloak.authenticated) {
         await keycloak?.updateToken(1);
-        const response = await fetch(`http://localhost:8081/note/${selectedNote.noteId}`, {
+        const response = await fetch(`${API_BASE_URL}/note/${selectedNote.noteId}`, {
           method: 'DELETE',
           headers: {
             ['Authorization']: `Bearer ${keycloak.token}`,
@@ -63,7 +64,6 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
         });
         
         if (response.ok) {
-          // Remove the deleted note from the list
           const updatedNotes = notes.filter(note => note.noteId !== selectedNote.noteId);
           onNoteUpdate(updatedNotes);
           setSelectedNote(null);
