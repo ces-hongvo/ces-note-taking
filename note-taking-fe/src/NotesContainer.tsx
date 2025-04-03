@@ -10,6 +10,12 @@ type Note = {
   content: string;
 };
 
+type ApiError = {
+  title: string;
+  status: number;
+  detail: string;
+};
+
 interface NotesContainerProps {
   notes: Note[];
   onNoteUpdate: (updatedNote: Note | Note[]) => void;
@@ -21,6 +27,14 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState<ApiError | null>(null);
+
+  const handleApiError = (error: ApiError) => {
+    setError(error);
+    setTimeout(() => {
+      setError(null);
+    }, 3000); // Clear error after 3 seconds
+  };
 
   const handleUpdate = async () => {
     if (!selectedNote) return;
@@ -37,13 +51,26 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
           },
           body: JSON.stringify(selectedNote),
         });
-        if (response.ok) {
-          const updatedNote = await response.json();
-          onNoteUpdate(updatedNote);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          handleApiError({
+            title: errorData.title || "Failed to update note",
+            status: response.status,
+            detail: errorData.detail || "An error occurred while updating the note"
+          });
+          return;
         }
+
+        const updatedNote = await response.json();
+        onNoteUpdate(updatedNote);
       }
     } catch (e) {
-      console.log("ERROR", e);
+      handleApiError({
+        title: "Network Error",
+        status: 0,
+        detail: "Failed to connect to the server"
+      });
     } finally {
       setIsUpdating(false);
     }
@@ -86,6 +113,13 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
 
   return (
     <div className="notes-wrapper">
+      {error && (
+        <div className="error-alert">
+          <h3>{error.title}</h3>
+          <p>Status: {error.status}</p>
+          <p>{error.detail}</p>
+        </div>
+      )}
       <div className="search-container">
         <input
           type="text"
