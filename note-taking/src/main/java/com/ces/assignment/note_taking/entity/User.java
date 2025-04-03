@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(
-    name = "user",
+    name = "users",
     indexes = {
         @Index(columnList = "email", name = "email_index")
     }
