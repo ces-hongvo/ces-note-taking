@@ -1,5 +1,6 @@
 package com.ces.assignment.note_taking.service.impl;
 
+import com.ces.assignment.note_taking.annotation.LogExecutionTime;
 import com.ces.assignment.note_taking.entity.Note;
 import com.ces.assignment.note_taking.entity.User;
 import com.ces.assignment.note_taking.exception.NoteNotFoundException;
@@ -17,9 +18,10 @@ import java.util.Objects;
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
 public class CommandNoteServiceImpl implements CommandNoteService {
     @Autowired
-    NoteRepository noteRepository;
+    private NoteRepository noteRepository;
 
     @Override
+    @LogExecutionTime
     public Note addNote(User user, String title, String content) {
         Note note = new Note();
         note.setTitle(title);
@@ -30,6 +32,7 @@ public class CommandNoteServiceImpl implements CommandNoteService {
     }
 
     @Override
+    @LogExecutionTime
     public Note updateNote(User user, long noteId, String title, String content) {
         Note note = noteRepository.findById(noteId)
             .orElseThrow(() -> new NoteNotFoundException(noteId));
@@ -45,6 +48,7 @@ public class CommandNoteServiceImpl implements CommandNoteService {
     }
 
     @Override
+    @LogExecutionTime
     public Note deleteNote(User user, long noteId) {
         Note note = noteRepository.findById(noteId)
             .orElseThrow(() -> new NoteNotFoundException(noteId));
