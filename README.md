@@ -1,7 +1,7 @@
 # Setup Local Run
 ## Start the Docker first
 
-Open folder **note-taking-dockers** and run the command
+From the project root folder run the command
 
     docker compose up
 
@@ -17,18 +17,6 @@ Add a new realm and select file: **note-taking-dockers/import.json** to import t
 
 Select the Realm **note-taking**
 Then select Users and add a new user. After adding a new user, select the **Credentials** to create password for this user. Make sure to turn the temporary off when you create password.
-
-## Start Back End
-
-Open folder **note-taking** and run the command
-
-    mvn spring-boot:run
-
-## Start Front End
-
-Open folder **note-taking-fe** and run the command
-
-    npx vite
 
 ## Accessing the App
 
