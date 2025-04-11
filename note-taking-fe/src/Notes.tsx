@@ -2,26 +2,17 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 import "./notes.css";
 import NotesContainer from "./NotesContainer";
-import { API_BASE_URL } from "./constants";
-
-type Note = {
-  noteId: string;
-  title: string;
-  content: string;
-};
-
-type ApiError = {
-  title: string;
-  status: number;
-  detail: string;
-};
+import {Note, ApiError, NoteContextType} from './interface/types.note';
+import { NoteContext } from "./context/NoteContextProvider";
+import React from "react";
 
 const Notes = () => {
   const { keycloak } = useKeycloak();
-  const [notes, setNotes] = useState<Note[]>([]);
   const [newNote, setNewNote] = useState<Note>({ noteId: "", title: "", content: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState<ApiError | null>(null);
+
+  const {notes, setNotes, getNotes, addNote} = React.useContext(NoteContext) as NoteContextType;
 
   const handleApiError = (error: ApiError) => {
     setError(error);
@@ -35,12 +26,7 @@ const Notes = () => {
       try {
         if (keycloak && keycloak.authenticated) {
           await keycloak?.updateToken(1);
-          const req = await fetch(`${API_BASE_URL}/note`, {
-            headers: {
-              ["Authorization"]: `Bearer ${keycloak.token}`,
-            },
-          });
-          
+          const req = await getNotes();
           if (!req.ok) {
             const errorData = await req.json();
             handleApiError({
@@ -70,14 +56,8 @@ const Notes = () => {
     try {
       if (keycloak && keycloak.authenticated) {
         await keycloak?.updateToken(1);
-        const response = await fetch(`${API_BASE_URL}/note`, {
-          method: "POST",
-          headers: {
-            ["Authorization"]: `Bearer ${keycloak.token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newNote),
-        });
+
+        const response = await addNote(newNote);
 
         if (!response.ok) {
           const errorData = await response.json();

@@ -2,19 +2,8 @@ import React, { useState } from 'react';
 import { useKeycloak } from "@react-keycloak/web";
 import MarkdownEditor from './MarkdownEditor';
 import './notes.css';
-import { API_BASE_URL } from './constants';
-
-type Note = {
-  noteId: string;
-  title: string;
-  content: string;
-};
-
-type ApiError = {
-  title: string;
-  status: number;
-  detail: string;
-};
+import { ApiError, Note, NoteContextType } from './interface/types.note';
+import { NoteContext } from './context/NoteContextProvider';
 
 interface NotesContainerProps {
   notes: Note[];
@@ -28,6 +17,8 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
   const [isDeleting, setIsDeleting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState<ApiError | null>(null);
+
+  const {updateNote, deleteNote} = React.useContext(NoteContext) as NoteContextType;
 
   const handleApiError = (error: ApiError) => {
     setError(error);
@@ -43,14 +34,7 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
     try {
       if (keycloak && keycloak.authenticated) {
         await keycloak?.updateToken(1);
-        const response = await fetch(`${API_BASE_URL}/note/${selectedNote.noteId}`, {
-          method: "PUT",
-          headers: {
-            ["Authorization"]: `Bearer ${keycloak.token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(selectedNote),
-        });
+        const response = await updateNote(selectedNote);
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -83,12 +67,7 @@ const NotesContainer: React.FC<NotesContainerProps> = ({ notes, onNoteUpdate }) 
     try {
       if (keycloak && keycloak.authenticated) {
         await keycloak?.updateToken(1);
-        const response = await fetch(`${API_BASE_URL}/note/${selectedNote.noteId}`, {
-          method: 'DELETE',
-          headers: {
-            ['Authorization']: `Bearer ${keycloak.token}`,
-          },
-        });
+        const response = await deleteNote(selectedNote);
         
         if (response.ok) {
           const updatedNotes = notes.filter(note => note.noteId !== selectedNote.noteId);

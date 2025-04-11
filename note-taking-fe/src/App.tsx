@@ -3,6 +3,7 @@ import "./App.css";
 import keycloak from "./keycloak";
 import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import Notes from "./Notes";
+import { NoteProvider } from "./context/NoteContextProvider";
 
 function App() {
   return (
@@ -19,9 +20,9 @@ const SecuredContent = () => {
   }, [isLoggedIn, keycloak]);
   if (!isLoggedIn) return <div>Not logged in</div>;
   return (
-    <div>
+    <NoteProvider>
       <Notes />
-    </div>
+    </NoteProvider>
   );
 };
 export default App;
